@@ -6,46 +6,96 @@
     <title>AI Chat</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f7fb;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         .chat-container {
-            max-width: 600px;
-            margin: 0 auto;
+            width: 400px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 500px;
         }
         .chat-box {
-            height: 300px;
+            flex-grow: 1;
             overflow-y: auto;
             border: 1px solid #ddd;
+            border-radius: 8px;
             padding: 10px;
             margin-bottom: 20px;
+            background-color: #fafafa;
+            font-size: 16px;
         }
         .message {
-            margin: 10px 0;
+            margin: 12px 0;
+            line-height: 1.5;
+            word-wrap: break-word;
         }
         .user-message {
             text-align: right;
+            color: #333;
+            background-color: #d2f8e3;
+            border-radius: 12px;
+            padding: 10px;
+            max-width: 70%;
+            margin-left: auto;
         }
         .ai-message {
             text-align: left;
+            color: #333;
+            background-color: #e0e0e0;
+            border-radius: 12px;
+            padding: 10px;
+            max-width: 70%;
         }
         textarea {
             width: 100%;
-            height: 50px;
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-top: 10px;
+            resize: none;
+            transition: all 0.3s ease;
+        }
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .loading {
+            text-align: center;
+            color: #007bff;
         }
     </style>
 </head>
 <body>
     <div class="chat-container">
-        <div class="chat-box" id="chat-box"></div>
+        <div class="chat-box" id="chat-box">
+            <p class="loading">Welcome! Ask me anything.</p>
+        </div>
         <textarea id="user-input" placeholder="Type your message..." autocomplete="off" autocorrect="off"></textarea>
         <button onclick="sendMessage()">Send</button>
     </div>
@@ -53,25 +103,25 @@
     <script>
         let conversation = [];
 
+        // Append message to the chat box
         function appendMessage(role, content) {
             const chatBox = document.getElementById('chat-box');
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message', role === 'user' ? 'user-message' : 'ai-message');
             messageDiv.textContent = content;
             chatBox.appendChild(messageDiv);
-            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+            chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
         }
 
+        // Send message when the button is clicked
         async function sendMessage() {
             const userInput = document.getElementById('user-input').value;
-            if (!userInput) return;
+            if (!userInput) return; // Prevent sending empty messages
 
             appendMessage('user', userInput);
+            document.getElementById('user-input').value = ''; // Clear the input field
 
-            // Clear input field
-            document.getElementById('user-input').value = '';
-
-            // Send message to Flask backend
+            // Send the user input to the Flask backend
             const response = await fetch('/chat', {
                 method: 'POST',
                 headers: {
@@ -89,6 +139,14 @@
 
             appendMessage('assistant', aiResponse);
         }
+
+        // Allow the "Enter" key to send the message
+        document.getElementById('user-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevents the newline in textarea
+                sendMessage(); // Send message on Enter
+            }
+        });
     </script>
 </body>
 </html>
