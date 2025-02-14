@@ -96,15 +96,43 @@
             background-color: #0056b3;
         }
         .loading {
-            text-align: center;
+            text-align: left;
             color: #007bff;
+            font-size: 18px;
+        }
+
+        /* Typing animation */
+        .typing-animation {
+            font-size: 24px;
+            font-weight: bold;
+            display: inline-block;
+            animation: typing 1.5s infinite;
+        }
+
+        /* Keyframes for typing animation */
+        @keyframes typing {
+            0% {
+                transform: scale(0.8);
+            }
+            25% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            75% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(0.8);
+            }
         }
     </style>
 </head>
 <body>
     <div class="chat-container">
         <div class="chat-box" id="chat-box">
-            <p class="loading">Welcome! Ask me anything.</p>
+            <p class="loading" id="typing-indicator">•</p>
         </div>
         <div class="input-container">
             <textarea id="user-input" placeholder="Type your message..." autocomplete="off" autocorrect="off"></textarea>
@@ -133,7 +161,11 @@
             appendMessage('user', userInput);
             document.getElementById('user-input').value = ''; // Clear the input field
 
-            // Send the user input to the Flask backend
+            // Show typing indicator
+            const typingIndicator = document.getElementById('typing-indicator');
+            typingIndicator.textContent = "•"; // Add a single dot to start the typing animation
+
+            // Simulate AI response after a delay (for demonstration)
             const response = await fetch('/chat', {
                 method: 'POST',
                 headers: {
@@ -149,6 +181,8 @@
             const aiResponse = data.response;
             conversation = data.conversation;
 
+            // Remove the typing indicator and append AI response
+            typingIndicator.textContent = ''; // Clear typing indicator
             appendMessage('assistant', aiResponse);
         }
 
