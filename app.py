@@ -2,9 +2,9 @@ from flask import Flask, render_template, request, jsonify
 from huggingface_hub import InferenceClient
 
 app = Flask(__name__)
-
+tkn = os.getenv("HFTKN")
 # Initialize Hugging Face Inference client
-client = InferenceClient(api_key=os.getenv("HFTkn")
+client = InferenceClient(api_key=tkn)
 
 @app.route('/')
 def index():
