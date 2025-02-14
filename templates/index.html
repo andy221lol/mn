@@ -185,7 +185,7 @@
         function showTypingAnimation() {
             const chatBox = document.getElementById('chat-box');
             const typingDiv = document.createElement('div');
-            typingDiv.classlist.add('message', 'ai-message');
+            typingDiv.classList.add('message', 'ai-message');
             typingDiv.innerHTML = '<span class="typing-animation"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>';
             chatBox.appendChild(typingDiv);
             chatBox.scrollTop = chatBox.scrollHeight;
@@ -206,8 +206,9 @@
 
             appendMessage('user', userInput);
             document.getElementById('user-input').value = ''; // Clear the input field
-            showTypingAnimation();
+
             // Send the user input to the Flask backend
+            showTypingAnimation();
             const response = await fetch('/chat', {
                 method: 'POST',
                 headers: {
@@ -222,6 +223,7 @@
             const data = await response.json();
             const aiResponse = data.response;
             conversation = data.conversation;
+
             removeTypingAnimation();
             appendMessage('assistant', aiResponse);
         }
