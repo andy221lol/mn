@@ -58,15 +58,22 @@
             padding: 10px;
             max-width: 70%;
         }
+        .input-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
         textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 8px;
             margin-top: 10px;
             resize: none;
             transition: all 0.3s ease;
+            box-sizing: border-box; /* Ensures it fits perfectly with the button */
         }
         textarea:focus {
             border-color: #007bff;
@@ -76,11 +83,13 @@
             background-color: #007bff;
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px 20px;
             border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            box-sizing: border-box; /* Ensures it fits perfectly with the textarea */
+            width: 120px; /* Fix the button width */
         }
         button:hover {
             background-color: #0056b3;
@@ -96,8 +105,10 @@
         <div class="chat-box" id="chat-box">
             <p class="loading">Welcome! Ask me anything.</p>
         </div>
-        <textarea id="user-input" placeholder="Type your message..." autocomplete="off" autocorrect="off"></textarea>
-        <button onclick="sendMessage()">Send</button>
+        <div class="input-container">
+            <textarea id="user-input" placeholder="Type your message..." autocomplete="off" autocorrect="off"></textarea>
+            <button onclick="sendMessage()">Send</button>
+        </div>
     </div>
 
     <script>
@@ -132,6 +143,24 @@
                     conversation: conversation,
                 }),
             });
+
+            const data = await response.json();
+            const aiResponse = data.response;
+            conversation = data.conversation;
+
+            appendMessage('assistant', aiResponse);
+        }
+
+        // Allow the "Enter" key to send the message
+        document.getElementById('user-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevents the newline in textarea
+                sendMessage(); // Send message on Enter
+            }
+        });
+    </script>
+</body>
+</html>
 
             const data = await response.json();
             const aiResponse = data.response;
