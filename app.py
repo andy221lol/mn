@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 tkn = os.getenv("HFTKN")
 # Initialize Hugging Face Inference client
-client = InferenceClient(api_key=tkn)
+client = InferenceClient(api_key="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")
 
 @app.route('/')
 def index():
