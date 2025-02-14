@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from huggingface_hub import InferenceClient
+import os
 
 app = Flask(__name__)
 tkn = os.getenv("HFTKN")
