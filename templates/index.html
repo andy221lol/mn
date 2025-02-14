@@ -161,6 +161,23 @@
             chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
         }
 
+        function showTypingAnimation() {
+            const chatBox = document.getElementById('chat-box');
+            const typingDiv = document.createElement('div');
+            typingDiv.classlist.add('message', 'ai-message');
+            typingDiv.innerHTML = '<span class="typing-animation"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>';
+            chatBox.appendChild(typingDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function removeTypingAnimation() {
+            const chatBox = document.getElementById('chat-box');
+            const typingDiv = chatBox.querySelector('.typing-animation');
+            if (typingDiv) {
+                typingDiv.parentNode.remove();
+            }
+        }
+
         // Send message when the button is clicked
         async function sendMessage() {
             const userInput = document.getElementById('user-input').value;
@@ -168,7 +185,7 @@
 
             appendMessage('user', userInput);
             document.getElementById('user-input').value = ''; // Clear the input field
-
+            showTypingAnimation();
             // Send the user input to the Flask backend
             const response = await fetch('/chat', {
                 method: 'POST',
@@ -184,7 +201,7 @@
             const data = await response.json();
             const aiResponse = data.response;
             conversation = data.conversation;
-
+            removeTypingAnimation();
             appendMessage('assistant', aiResponse);
         }
 
