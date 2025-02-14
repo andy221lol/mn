@@ -37,26 +37,24 @@
             font-size: 16px;
         }
         .message {
+            display: inline-block; /* Shrink to the content width */
             margin: 12px 0;
             line-height: 1.5;
             word-wrap: break-word;
+            padding: 10px;
+            border-radius: 12px;
+            max-width: 80%; /* Optional: Ensures messages don’t get too wide */
         }
         .user-message {
             text-align: right;
             color: #333;
             background-color: #d2f8e3;
-            border-radius: 12px;
-            padding: 10px;
-            max-width: 70%;
             margin-left: auto;
         }
         .ai-message {
             text-align: left;
             color: #333;
             background-color: #e0e0e0;
-            border-radius: 12px;
-            padding: 10px;
-            max-width: 70%;
         }
         .input-container {
             display: flex;
@@ -143,24 +141,6 @@
                     conversation: conversation,
                 }),
             });
-
-            const data = await response.json();
-            const aiResponse = data.response;
-            conversation = data.conversation;
-
-            appendMessage('assistant', aiResponse);
-        }
-
-        // Allow the "Enter" key to send the message
-        document.getElementById('user-input').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault(); // Prevents the newline in textarea
-                sendMessage(); // Send message on Enter
-            }
-        });
-    </script>
-</body>
-</html>
 
             const data = await response.json();
             const aiResponse = data.response;
