@@ -43,10 +43,11 @@
             word-wrap: break-word;
             padding: 10px;
             border-radius: 12px;
-            max-width: 80%; /* Optional: Ensures messages don’t get too wide */
+            width: fit-content; /* Adjust to the content width */
+            max-width: 80%; /* Optional: Prevent messages from becoming too wide */
         }
         .user-message {
-            text-align: right;
+            text-align: left;
             color: #333;
             background-color: #d2f8e3;
             margin-left: auto;
@@ -59,7 +60,7 @@
         .input-container {
             display: flex;
             flex-direction: row;
-            align-items: center;
+            align-items: stretch;
             gap: 10px;
         }
         textarea {
@@ -72,6 +73,7 @@
             resize: none;
             transition: all 0.3s ease;
             box-sizing: border-box; /* Ensures it fits perfectly with the button */
+            height: 48px; /* Set fixed height for consistency */
         }
         textarea:focus {
             border-color: #007bff;
@@ -86,8 +88,9 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            box-sizing: border-box; /* Ensures it fits perfectly with the textarea */
+            box-sizing: border-box;
             width: 120px; /* Fix the button width */
+            height: 48px; /* Set height to match the textarea */
         }
         button:hover {
             background-color: #0056b3;
