@@ -21,7 +21,7 @@ def chat():
 
     # Call Hugging Face API for response
     completion = client.chat.completions.create(
-        model="Qwen/Qwen2.5-Coder-32B-Instruct", 
+        model="Qwen/Qwen2.5-Coder-32B-Instructm", 
         messages=conversation,
         temperature=0.5,
         max_tokens=2048,
