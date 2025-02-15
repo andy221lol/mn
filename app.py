@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from huggingface_hub import InferenceClient
 import os
+import { inject } from "@vercel/analytics"
 
 app = Flask(__name__)
 tkn = os.getenv("HFTKN")
