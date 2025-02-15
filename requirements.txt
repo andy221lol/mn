@@ -1,3 +1,2 @@
 Flask
 huggingface_hub
-@vercel/analytics
