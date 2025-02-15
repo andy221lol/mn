@@ -16,7 +16,7 @@
             height: 100vh;
         }
         .chat-container {
-            width: 90vh;
+            width: 90%;
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -24,7 +24,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 90vh;
+            height: 90%;
         }
         .chat-box {
             flex-grow: 1;
@@ -135,32 +135,12 @@
             }
         }
         /* you left off here */
-        @media (max-width: 768px) {
-            .chat-container {
-                height: 80vh;
-                padding: 15px;
-            }
-            button {
-                width: 25%;
-            }
-        }
-        @media (max-width: 480px) {
-            .chat-container {
-                height: 80hv;
-                padding: 10px;
-            }
-            button {
-                width: 30%;
-            }
-            .message {
-                font-size: 14px;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="chat-container">
         <div class="chat-box" id="chat-box">
+            <p class="loading">NotAnAI.xyz Beta Version 0.2</p>
             <p class="loading">Welcome! Ask me anything.</p>
         </div>
         <div class="input-container">
