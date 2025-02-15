@@ -1,3 +1,62 @@
+function showTypingAnimation() {
+    const chatBox = document.getElementById('chat-box');
+    const typingDiv = document.createElement('div');
+    typingDiv.classList.add('message', 'ai-message');
+    typingDiv.innerHTML = '<span class="typing-animation"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>';
+    chatBox.appendChild(typingDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function removeTypingAnimation() {
+    const chatBox = document.getElementById('chat-box');
+    const typingDiv = chatBox.querySelector('.typing-animation');
+    if (typingDiv) {
+        typingDiv.parentNode.remove();
+    }
+}
+
+async function sendMessage() {
+    const userInput = document.getElementById('user-input').value;
+    if (!userInput) return; // Prevent sending empty messages
+
+    appendMessage('user', userInput);
+    document.getElementById('user-input').value = ''; // Clear the input field
+
+    // Show loading animation
+    showTypingAnimation();
+
+    // Send the user input to the Flask backend
+    try {
+        const response = await fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: userInput,
+                conversation: conversation,
+            }),
+        });
+
+        const data = await response.json();
+        const aiResponse = data.response;
+        conversation = data.conversation;
+
+        // Remove typing animation and append AI response
+        removeTypingAnimation();
+        appendMessage('assistant', aiResponse);
+    } catch (error) {
+        console.error("Error:", error);
+        removeTypingAnimation();
+        appendMessage('assistant', "Sorry, I couldn't process that request. Please try again.");
+    }
+}
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
