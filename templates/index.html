@@ -141,6 +141,32 @@
             }
         }
         /* you left off here */
+        @media (max-width: 768px) {
+            .chat-container {
+                height: 80vh; /* Reduce height for smaller screens */
+                padding: 15px;
+                margin-left:15px;
+                margin-right: 15px;
+            }
+            button {
+                width: 25%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chat-container {
+                height: 80vh;
+                padding: 10px;
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+            button {
+                width: 30%;
+            }
+            .message {
+                font-size: 14px; /* Smaller font for smaller screens */
+            }
+        }
     </style>
 </head>
 <body>
